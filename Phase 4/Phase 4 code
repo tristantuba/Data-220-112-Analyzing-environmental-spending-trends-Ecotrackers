@@ -1,0 +1,31 @@
+These are the same for each set of variables 
+#change name for each new variable ex change PRES20 to NATPARK
+Chi-Squared:
+# Clean and filter data
+> gss_clean <- subset(gss2022, !is.na(PRES20) & !is.na(NEWS))
+> 
+> # Run chi-squared test
+> chisq.test(x = gss_clean$PRES20, y = gss_clean$NEWS)
+
+Standardized Residual:
+# Load the descr package
+> library(package = "descr")
+> 
+> # Run CrossTable with standardized residuals
+> CrossTable(
++     x = gss2022$PRES20,
++     y = gss2022$NEWS,
++     expected = TRUE,
++     prop.c = FALSE,
++     prop.t = FALSE,
++     prop.chisq = FALSE,
++     chisq = TRUE,
++     sresid = TRUE
++ )
+
+Cramer’s V:
+# Load the required package
+> library(package = "lsr")
+> 
+> # Compute Cramér’s V
+> cramersV(x = gss2022$PRES20, y = gss2022$NEWS)
