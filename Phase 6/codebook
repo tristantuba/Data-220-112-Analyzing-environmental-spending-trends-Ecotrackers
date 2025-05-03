@@ -15,3 +15,26 @@ library(haven)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   1.000   1.000   1.000   1.561   2.000   3.000     123 
 > 
+
+#possible code for calculating B index 
+
+gss2022$PRES20 <- as_factor(gss2022$PRES20)
+>  props <- prop.table(table(gss2022$PRES20))
+>  B_index <- 1 - sum(props^2)
+>  B_index
+[1] 0.4998379
+> gss2022$NEWS <- as_factor(gss2022$NEWS)
+>   props <- prop.table(table(gss2022$NEWS))
+>   B_index <- 1 - sum(props^2)
+>   B_index
+[1] 0.6865905
+> gss2022$NATPARK <- as_factor(gss2022$NATPARK)
+>  props <- prop.table(table(gss2022$NATPARK))
+>   B_index <- 1 - sum(props^2)
+>   B_index
+[1] 0.5365089
+> gss2022$NATENRGY <- as_factor(gss2022$NATENRGY)
+>  props <- prop.table(table(gss2022$NATENRGY))
+>   B_index <- 1 - sum(props^2)
+>   B_index
+[1] 0.5683222
