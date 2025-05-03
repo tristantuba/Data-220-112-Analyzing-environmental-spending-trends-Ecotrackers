@@ -1,0 +1,17 @@
+# Descriptive statistic code
+library(haven)
+> gss2022 <- read_sas("Downloads/2022 2/gss2022.sas7bdat")
+> 
+> summary(gss2022$PRES20)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.000   1.000   1.000   1.428   2.000   4.000    1352 
+> summary(gss2022$NEWS)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.000   2.000   4.000   3.717   5.000   5.000    1397 
+> summary(gss2022$NATPARK)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.000   1.000   2.000   1.667   2.000   3.000      73 
+> summary(gss2022$NATENRGY)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.000   1.000   1.000   1.561   2.000   3.000     123 
+> 
