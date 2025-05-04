@@ -18,23 +18,72 @@ library(haven)
 
 #possible code for calculating B index 
 
-gss2022$PRES20 <- as_factor(gss2022$PRES20)
->  props <- prop.table(table(gss2022$PRES20))
->  B_index <- 1 - sum(props^2)
->  B_index
-[1] 0.4998379
-> gss2022$NEWS <- as_factor(gss2022$NEWS)
->   props <- prop.table(table(gss2022$NEWS))
->   B_index <- 1 - sum(props^2)
->   B_index
-[1] 0.6865905
-> gss2022$NATPARK <- as_factor(gss2022$NATPARK)
->  props <- prop.table(table(gss2022$NATPARK))
->   B_index <- 1 - sum(props^2)
->   B_index
-[1] 0.5365089
-> gss2022$NATENRGY <- as_factor(gss2022$NATENRGY)
->  props <- prop.table(table(gss2022$NATENRGY))
->   B_index <- 1 - sum(props^2)
->   B_index
-[1] 0.5683222
+> install.packages(“qualvar”)
+> #B index for PRES20 variable 
+> qualvar::B(x=table(gss2022$PRES20))
+
+
+> #B index for NEWS variable 
+> qualvar::B(x=table(gss2022$NEWS))
+
+
+> #B index for NATPARK variable
+> qualvar::B(x=table(gss2022$NATPARK))
+
+
+> #B index for NATENRGY variable
+> qualvar::B(x=table(gss2022$NATENRGY)) 
+
+#Bar chart for survey respondent’s voting choices in the 2020 U.S election (B):
+
+> # Load ggplot2
+> library(ggplot2)
+>
+> gss2022$PRES20 <- factor(gss2022$PRES20,
++                         levels = c(1, 2, 3, 4, 5),
++                         labels = c("Joe Biden", "Donald Trump", "Jo Jorgensen", "Howie Hawkins", +"Other"))
+
+> # Plot including NA
+> ggplot(data = gss2022, aes(x = PRES20)) +
++  geom_bar(fill = "steelblue") +
++  labs(
++    title = "2020 Presidential Vote Choice",
++    x = "Candidate",
++    y = "Count"
++  ) +
++  theme_minimal()
+
+#Boxplot for comparing news consumption to survey respondents voting choices in the 2020 U.S. election (C):
+
+> # Step 1: Install and load ggplot2 
+> install.packages("ggplot2")  
+
+
+> library(ggplot2)
+> 
+> # Filter to include only Trump and Biden voters with non-missing NEWS values
+> gss2022_filtered <- subset(gss2022,
++                            PRES20 %in% c("Joe Biden", "Donald Trump") &
++                                !is.na(NEWS))
+> 
+> Reorder levels of PRES20 so Trump is on the left, Biden on the right
+> gss2022_filtered$PRES20 <- factor(gss2022_filtered$PRES20,
++                                   levels = c("Donald Trump", "Joe Biden"))
+> 
+> Create the boxplot
+> ggplot(gss2022_filtered, aes(x = PRES20, y = NEWS, fill = PRES20)) +
++     geom_boxplot() +
++     scale_y_continuous(
++         breaks = 1:5,
++         labels = c("EVERY DAY", "A FEW TIMES A WEEK", "ONCE A WEEK",
++                    "LESS THAN ONCE A WEEK", "NEVER")
++     ) +
++     scale_fill_manual(values = c("red", "blue")) +
++     labs(
++         title = "News Consumption by 2020 Vote Choice",
++         x = "Vote Choice",
++         y = "News Consumption Frequency",
++         fill = "Vote Choice"
++     ) +
++     theme_minimal()
+
